@@ -39,3 +39,4 @@ class Habits(models.Model):
         verbose_name = 'Привычка'
         verbose_name_plural = 'Привычки'
         ordering = ['-id']
+

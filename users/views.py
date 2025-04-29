@@ -14,3 +14,4 @@ class UserCreateAPIView(generics.CreateAPIView):
         user = serializer.save()
         user.set_password(user.password)
         user.save()
+

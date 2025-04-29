@@ -9,3 +9,4 @@ class HabitSerializer(serializers.ModelSerializer):
         model = Habits
         fields = '__all__'
         validators = [HabitsValidator]
+

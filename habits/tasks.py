@@ -14,3 +14,4 @@ def send_habit():
             tg_chat = habit.user.tg_chat_id
             message = f"Я буду {habit.action} в {habit.time} в {habit.place}."
             send_telegram_message(tg_chat, message)  # Отправляем привычку в Telegram чат
+

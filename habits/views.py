@@ -52,3 +52,4 @@ class HabitsPublicListAPIView(generics.ListAPIView):
     queryset = Habits.objects.filter(is_public=True)
     permission_classes = (AllowAny,)
     pagination_class = CustomPagination
+

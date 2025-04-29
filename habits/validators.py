@@ -19,3 +19,4 @@ class HabitsValidator:
             if value['related']:
                 if not value['related'].is_good:
                     raise serializers.ValidationError('Связанные привычки = приятные привычки')
+
