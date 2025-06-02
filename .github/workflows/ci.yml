@@ -16,7 +16,7 @@ jobs:
           POSTGRES_PASSWORD: moon
           POSTGRES_DB: skypro_hw
         options: >-
-          --health-cmd "pg_isready -h localhost -U postgres"
+          --health-cmd "pg_isready -h postgres -U postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -49,6 +49,10 @@ jobs:
               sleep 1
             fi
           done
+
+      - name: Check PostgreSQL logs
+        run: |
+          docker-compose logs postgres
 
       - name: Run migrations
         env:
