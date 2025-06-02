@@ -16,7 +16,7 @@ jobs:
           POSTGRES_PASSWORD: moon
           POSTGRES_DB: skypro_hw
         options: >-
-          --health-cmd pg_isready
+          --health-cmd pg_isready -U postgres
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -38,11 +38,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Check PostgreSQL logs
+        run: |
+          docker-compose logs postgres
+
       - name: Wait for PostgreSQL
         run: |
-          until pg_isready -h postgres -p 5432; do
-            echo "Waiting for postgres..."
-            sleep 1
+          for i in {1..30}; do
+            if pg_isready -h postgres -p 5432; then
+              echo "Postgres is ready!"
+              break
+            else
+              echo "Waiting for postgres..."
+              sleep 1
+            fi
           done
 
       - name: Run migrations
