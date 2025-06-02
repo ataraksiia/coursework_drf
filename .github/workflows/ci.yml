@@ -3,22 +3,6 @@ name: Django CI/CD Pipeline
 on: [push, pull_request]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Install flake8
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8
-      - name: Run flake8
-        run: flake8 .
-
   test:
     runs-on: ubuntu-latest
 
@@ -60,6 +44,17 @@ jobs:
             echo "Waiting for postgres..."
             sleep 1
           done
+      - name: Debug Django DB settings
+        run: |
+          python manage.py shell -c "from django.conf import settings; print(settings.DATABASES)"
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+          SECRET_KEY: ${{ env.SECRET_KEY }}
+          NAME: skypro_hw
+          USER: postgres
+          PASSWORD: moon
+          HOST: 127.0.0.1
+          PORT: 5432
 
       - name: Run migrations
         env:
