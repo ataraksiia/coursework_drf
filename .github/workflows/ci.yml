@@ -122,10 +122,10 @@ jobs:
           chmod 600 private_key.pem
           echo "ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'"
           echo "Pulling the latest Docker image..."
-          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:latest || echo "Failed to pull image"
+          echo "docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:latest || echo "Failed to pull image""
           echo "Stopping and removing existing container..."
-          docker stop myapp_container || true
-          docker rm myapp_container || true
+          echo "docker stop myapp_container || true"
+          echo "docker rm myapp_container || true"
           echo "Running new container..."
-          docker run -d --name myapp_container -p 8000:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:latest
+          echo "docker run -d --name myapp_container -p 8000:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:latest"
           EOF
