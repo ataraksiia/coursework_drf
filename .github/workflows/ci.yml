@@ -118,6 +118,14 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          echo "${SSH_PRIVATE_KEY} > private_key.pem"
+          echo "${SSH_PRIVATE_KEY}" > private_key.pem
           chmod 600 private_key.pem
-          ssh -o StrictHostKeyChecking=no -i private_key.pem username@remote-server 'docker pull your-image-name:latest && docker stop your-container-name || true && docker rm your-container-name || true && docker run -d --name your-container-name your-image-name:latest'
+          echo "ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'"
+          echo "Pulling the latest Docker image..."
+          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:latest || echo "Failed to pull image"
+          echo "Stopping and removing existing container..."
+          docker stop myapp_container || true
+          docker rm myapp_container || true
+          echo "Running new container..."
+          docker run -d --name myapp_container -p 8000:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:latest
+          EOF
