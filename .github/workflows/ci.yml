@@ -118,6 +118,6 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          echo "${SSH_PRIVATE_KEY}" > private_key.pem
+          echo "${SSH_PRIVATE_KEY} > private_key.pem"
           chmod 600 private_key.pem
           ssh -o StrictHostKeyChecking=no -i private_key.pem username@remote-server 'docker pull your-image-name:latest && docker stop your-container-name || true && docker rm your-container-name || true && docker run -d --name your-container-name your-image-name:latest'
