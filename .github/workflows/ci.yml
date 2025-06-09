@@ -128,4 +128,3 @@ jobs:
           echo "docker rm myapp_container || true"
           echo "Running new container..."
           echo "docker run -d --name myapp_container -p 8000:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:latest"
-          EOF
